@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mental Health Chatbot</title>
+    <style>
+        body {
+            background-image: url("data:image/png;base64,{{ bin_str }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .chatbox {
+            background: rgba(255,255,255,0.85);
+            margin: 40px auto;
+            width: 50vw;
+            padding: 30px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbox">
+        <h1>Mental Health Support Agent</h1>
+        {% for msg in conversation %}
+            <p><strong>{{ 'You' if msg.role == 'user' else 'AI' }}:</strong> {{ msg.content }}</p>
+        {% endfor %}
+
+        <form method="post">
+            <input type="text" name="user_message" placeholder="How can I help you today?" style="width:80%">
+            <button type="submit">Send</button>
+        </form>
+        <br>
+        <form method="post" style="display: inline;">
+            <button type="submit" name="affirmation">Give me a positive Affirmation</button>
+        </form>
+        <form method="post" style="display: inline;">
+            <button type="submit" name="meditation">Give me a guided meditation</button>
+        </form>
+        <br><br>
+        {% if ai_response %}
+            <p><strong>AI:</strong> {{ ai_response }}</p>
+        {% endif %}
+        {% if affirmation %}
+            <p><strong>Affirmation:</strong> {{ affirmation }}</p>
+        {% endif %}
+        {% if meditation_guide %}
+            <p><strong>Guided Meditation:</strong> {{ meditation_guide }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
